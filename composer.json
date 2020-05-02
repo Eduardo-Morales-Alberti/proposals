@@ -1,0 +1,110 @@
+{
+    "name": "drupal-composer/drupal-project",
+    "description": "Project template for Drupal 8 projects with composer",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "",
+            "role": ""
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.8",
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6.5",
+        "drupal/admin_toolbar": "^2.2",
+        "drupal/console": "^1.0.2",
+        "drupal/core": "^8.8.0",
+        "drupal/core-composer-scaffold": "^8.8.0",
+        "drupal/drupal-extension": "^3.4",
+        "drupal/social_auth_google": "^2.0",
+        "drush/drush": "^9.7.1 | ^10.0.0",
+        "mglaman/drupal-check": "^1.0",
+        "pdepend/pdepend": "^2.5",
+        "phpmd/phpmd": "^2.6",
+        "vlucas/phpdotenv": "^2.4",
+        "webflo/drupal-finder": "^1.0.0",
+        "zaporylie/composer-drupal-optimizations": "^1.0"
+    },
+    "require-dev": {
+        "drupal/core-dev": "^8.8.0",
+        "drupal/coder": "~8.2",
+        "vijaycs85/drupal-quality-checker": "^1.0"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ],
+        "files": ["load.environment.php"]
+    },
+    "scripts": {
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ]
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "drupal-scaffold": {
+            "locations": {
+                ".gitattributes": "../.gitattributes",
+                ".editorconfig": "../.editorconfig"
+            }
+        },
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "patches": {
+            "drupal/core": {
+                "Cannot update some file properties during migrate update. (https://www.drupal.org/project/drupal/issues/2822545)": "https://www.drupal.org/files/issues/2019-10-11/core-2822545-12.patch",
+                "Add time to views date filter https://www.drupal.org/project/drupal/issues/2832058": "https://www.drupal.org/files/issues/views-add-time-to-date-filter-2832058-21.patch",
+                "Add new permission to view user email field (https://www.drupal.org/project/drupal/issues/2799049)": "https://www.drupal.org/files/issues/2019-11-07/2799049-55.patch",
+                "1832818 - Allow a queue item to be postponed": "https://www.drupal.org/files/issues/2020-03-24/1832818.80-requeue.patch",
+                "3122195 - Provide a method in migrate id maps to get the rows with a specific status.": "https://www.drupal.org/files/issues/2020-03-25/migrate-rows-needing-status-3122195-2.patch"
+            }
+        }
+    }
+}
